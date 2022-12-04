@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-sample-plugin",
+	"name": "obsidian-review-notes-plugin",
 	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"description": "This plugin shows recently modified and newly created files",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",

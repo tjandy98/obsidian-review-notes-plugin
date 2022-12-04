@@ -1,8 +1,32 @@
-/*
+.recent-notes-path {
+	color: var(--text-muted);
+}
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+.recent-notes {
+	/* border: 1px solid var(--background-modifier-border); */
+	padding: 10px;
+}
 
-If your plugin does not need CSS, delete this file.
+.recent-notes-title {
+	display: flex;
+	justify-content: space-between;
+}
 
-*/
+.recent-notes-content {
+	flex-grow: 1;
+}
+
+.recent-notes-check {
+	display: none;
+	color: var(--nav-item-color);
+	height: 16px;
+}
+
+.recent-notes-title:hover .recent-notes-check {
+	display: block;
+	cursor: pointer;
+}
+
+.recent-notes-check:hover {
+	color: var(--nav-item-color-hover);
+}
