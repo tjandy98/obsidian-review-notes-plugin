@@ -32,8 +32,6 @@ export default class RecentNotesPlugin extends Plugin {
 
 		// handles creation of new file and modification to existing file
 
-		this.registerEvent(this.app.vault.on("create", this.savePath));
-
 		this.registerEvent(this.app.vault.on("modify", this.savePath));
 
 		this.registerEvent(this.app.vault.on("rename", this.renamePath));
@@ -45,15 +43,14 @@ export default class RecentNotesPlugin extends Plugin {
 				this.recentNotes,
 				this
 			);
+			this.registerEvent(this.app.vault.on("create", this.savePath));
+
 			return this.reviewNotesView;
 		});
 
 		this.addRibbonIcon("file", "View Recent Notes", () => {
 			this.activateView();
 		});
-
-		// This adds a settings tab so the user can configure various aspects of the plugin
-		this.addSettingTab(new SettingsTab(this.app, this));
 	}
 
 	async activateView() {
@@ -92,15 +89,15 @@ export default class RecentNotesPlugin extends Plugin {
 	};
 
 	renamePath = async (file: TFile, previousPath: string): Promise<void> => {
-		const fileIndex = this.recentNotes.files.findIndex(
+		const note = this.recentNotes.files.find(
 			(item) => item.path === previousPath
 		);
 
-		if (fileIndex != -1) {
+		if (note) {
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-			this.recentNotes.files.at(fileIndex)!.path = file.path;
+			note.path = file.path;
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-			this.recentNotes.files.at(fileIndex)!.filename = file.basename;
+			note.filename = file.basename;
 
 			await this.saveRecentNotes();
 		}
@@ -113,22 +110,5 @@ export default class RecentNotesPlugin extends Plugin {
 	async saveRecentNotes() {
 		await this.saveData(this.recentNotes);
 		this.reviewNotesView.onOpen();
-	}
-}
-
-class SettingsTab extends PluginSettingTab {
-	plugin: RecentNotesPlugin;
-
-	constructor(app: App, plugin: RecentNotesPlugin) {
-		super(app, plugin);
-		this.plugin = plugin;
-	}
-
-	display(): void {
-		const { containerEl } = this;
-
-		containerEl.empty();
-
-		containerEl.createEl("h2", { text: "Review Notes Pugin - Settings" });
 	}
 }
