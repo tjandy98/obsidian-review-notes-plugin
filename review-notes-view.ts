@@ -61,7 +61,7 @@ export class ReviewNotesView extends ItemView {
 						.find((f) => f.path === file.path);
 
 					if (_file) {
-						const leaf = this.app.workspace.getMostRecentLeaf();
+						const leaf = this.app.workspace.getLeaf(false);
 						if (leaf) {
 							leaf.openFile(_file);
 						}
