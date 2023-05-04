@@ -30,3 +30,12 @@
 .recent-notes-check:hover {
 	color: var(--nav-item-color-hover);
 }
+.action-icon {
+	width: 20px;
+	height: 20px;
+	fill: var(--text-muted);
+}
+
+.action-icon:hover {
+	fill: var(--text-normal);
+}
