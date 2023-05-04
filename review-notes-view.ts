@@ -1,5 +1,5 @@
 import RecentNotesPlugin from "main";
-import { ItemView, WorkspaceLeaf, getIcon, Notice } from "obsidian";
+import { ItemView, WorkspaceLeaf, getIcon, setIcon, Notice } from "obsidian";
 import { RecentNotes, File } from "recent-notes-interface";
 
 export const VIEW_TYPE_REVIEW_NOTES = "review-notes";
@@ -109,9 +109,9 @@ export class ReviewNotesView extends ItemView {
 				);
 			}
 		);
-		navButtonSortAsc.appendChild(getIcon("sortAsc")!);
-		navButtonSortDesc.appendChild(getIcon("sortDesc")!);
-		navButtonRemoveAll.appendChild(getIcon("cross-in-box")!);
+		setIcon(navButtonSortAsc, "sortAsc");
+		setIcon(navButtonSortDesc, "sortDesc");
+		setIcon(navButtonRemoveAll, "cross-in-box");
 
 		this.recentNotes.files.forEach((file) => {
 			const navFile = childrenEl.createDiv({
