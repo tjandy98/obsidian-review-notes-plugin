@@ -1,3 +1,4 @@
+import { addIcons } from "icons";
 import {
 	App,
 	Notice,
@@ -31,7 +32,6 @@ export default class RecentNotesPlugin extends Plugin {
 		await this.loadRecentNotes();
 
 		// handles creation of new file and modification to existing file
-
 		this.registerEvent(this.app.vault.on("modify", this.savePath));
 
 		this.registerEvent(this.app.vault.on("rename", this.renamePath));
@@ -47,6 +47,7 @@ export default class RecentNotesPlugin extends Plugin {
 
 			return this.reviewNotesView;
 		});
+		addIcons();
 
 		this.addRibbonIcon("file", "View Recent Notes", () => {
 			this.activateView();
