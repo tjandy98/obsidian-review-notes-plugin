@@ -1,7 +1,7 @@
 {
 	"id": "obsidian-review-notes-plugin",
 	"name": "Review Notes Plugin",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"minAppVersion": "0.15.0",
 	"description": "This plugin shows recently modified and newly created files",
 	"author": "tjandy98",
