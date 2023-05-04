@@ -1,5 +1,6 @@
+import { icons } from "icons";
 import RecentNotesPlugin from "main";
-import { ItemView, WorkspaceLeaf, getIcon, setIcon, Notice } from "obsidian";
+import { ItemView, WorkspaceLeaf, getIcon, Notice } from "obsidian";
 import { RecentNotes, File } from "recent-notes-interface";
 
 export const VIEW_TYPE_REVIEW_NOTES = "review-notes";
@@ -34,16 +35,23 @@ export class ReviewNotesView extends ItemView {
 	};
 
 	sortFiles = (files: File[], order: SortOrder): File[] => {
+		const collator = new Intl.Collator(undefined, { numeric: true });
+
 		return files.sort((a: File, b: File) => {
 			const aWithoutExtension = this.removeExtension(a.filename);
 			const bWithoutExtension = this.removeExtension(b.filename);
 
 			if (order === "ascending") {
-				return aWithoutExtension.localeCompare(bWithoutExtension);
+				return collator.compare(aWithoutExtension, bWithoutExtension);
 			} else {
-				return bWithoutExtension.localeCompare(aWithoutExtension);
+				return collator.compare(bWithoutExtension, aWithoutExtension);
 			}
 		});
+	};
+
+	CustomElement = (svgText: string): HTMLElement => {
+		const parser = new DOMParser();
+		return parser.parseFromString(svgText, "text/xml").documentElement;
 	};
 
 	async onOpen() {
@@ -109,9 +117,10 @@ export class ReviewNotesView extends ItemView {
 				);
 			}
 		);
-		setIcon(navButtonSortAsc, "sortAsc");
-		setIcon(navButtonSortDesc, "sortDesc");
-		setIcon(navButtonRemoveAll, "cross-in-box");
+
+		navButtonSortAsc.appendChild(this.CustomElement(icons["sortAsc"]));
+		navButtonSortDesc.appendChild(this.CustomElement(icons["sortDesc"]));
+		navButtonRemoveAll.appendChild(getIcon("lucide-x")!);
 
 		this.recentNotes.files.forEach((file) => {
 			const navFile = childrenEl.createDiv({
